@@ -223,6 +223,11 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
+        //MARK:- Change By SimformSolutions, To hide the statusbar on leftController
+        SlideMenuOptions.hideStatusBar = true
+        setOpenWindowLevel()
+        //------
+
         self.delegate?.leftWillOpen?()
         
         setOpenWindowLevel()
@@ -238,6 +243,11 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
+        //MARK:- Change By SimformSolutions, To show the statusbar on rightController
+        SlideMenuOptions.hideStatusBar = false
+        setOpenWindowLevel()
+        //------
+
         self.delegate?.rightWillOpen?()
         
         setOpenWindowLevel()
@@ -1041,9 +1051,12 @@ extension UIViewController {
         return nil
     }
     
-    public func addLeftBarButtonWithImage(_ buttonImage: UIImage) {
-        let leftButton: UIBarButtonItem = UIBarButtonItem(image: buttonImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.toggleLeft))
-        navigationItem.leftBarButtonItem = leftButton
+    //MARK:- Rechange By SimformSolutions from image to view
+    public func addRightBarButtonWithView(_ view: UIView) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.toggleRight))
+        view.addGestureRecognizer(tapGestureRecognizer)
+        let rightButton: UIBarButtonItem = UIBarButtonItem.init(customView: view)
+        navigationItem.rightBarButtonItem = rightButton;
     }
     
     public func addRightBarButtonWithImage(_ buttonImage: UIImage) {
